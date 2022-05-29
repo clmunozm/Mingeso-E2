@@ -1,0 +1,44 @@
+<html>
+    <meta charset="UTF-8">
+    <head>
+        <title>Formulario web</title>
+    </head>
+    <body>
+        <h2>Encuesta dominio de tecnologías web</h2>
+        <br />
+        <form>
+            <label for="nombre">Nombre:</label>
+            <br />
+            <input type="text" placeholder="Esteban" size="10" name="nombre" id="nombre">
+            <br />
+            <label for="apellidos">Apellidos:</label>
+            <br />
+            <input type="text" placeholder="Castillo" size="10" name="apellidos" id="apellidos">
+            <br />
+            <label for="pais">País origen:</label>
+            <br />
+            <select name="pais" id="pais">
+                <option value="Chile">Chile</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <br /><br />
+            <label for="tecnologia">Elija la tecnología Frontend que mejor Domina:</label>
+            <br /><br />
+            <input type="radio" name="tecnologia" id="tecnologia">HTML
+            <br />
+            <input type="radio" name="tecnologia" id="tecnologia">CSS
+            <br />
+            <input type="radio" name="tecnologia" id="tecnologia">JavaScript
+            <br /><br />
+            <label for="tecnologia">Elija la tecnología Backend que mejor Domina:</label>
+            <br /><br />
+            <input type="checkbox" name="tecnologia" id="tecnologia">NodeJS
+            <br />
+            <input type="checkbox" name="tecnologia" id="tecnologia">Django
+            <br />
+            <input type="checkbox" name="tecnologia" id="tecnologia">Spring Boot
+            <br /><br />
+            <input type="button" value="Enviar Datos" >
+        </form>
+    </body>
+</html>

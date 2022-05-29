@@ -1,0 +1,69 @@
+- hosts: webservers
+  remote_user: root
+  become: yes # sudo
+  vars:
+    server_name: "{{ ansible_default_ipv4.address }}"
+    document_root: /var/www
+    app_root: html-site
+  tasks:
+  ##
+  # Actualizar paquetes actuales y repositorios
+  ##
+  - name: Run equivalent of "apt-get update" as a separate step
+    apt:
+      update_cache: yes
+  # name: Update all packages to their latest version
+  #  apt:
+  #   name: "*"
+  #    state: latest
+  ##
+  # Instalación de paquetes necesarios
+  ##
+  - name: Ensure Nginx is at the latest version
+    apt:
+      name: nginx
+      state: latest
+      update_cache: yes
+
+  - name: Copy website files to the server's document root
+    copy:
+      src: "{{ app_root }}"
+      dest: "{{ document_root }}"
+      mode: preserve
+
+  - name: Apply Nginx template
+    template: 
+      src: nginx.conf.j2
+      dest: /etc/nginx/sites-available/default
+    notify: Restart Nginx
+
+  - name: Enable new site
+    file:
+      src: /etc/nginx/sites-available/default
+      dest: /etc/nginx/sites-enabled/default
+      state: link
+    notify: Restart Nginx
+  ##
+  # Desplegar formilario en nginx
+  ##
+  #- name: Copy html file
+   # template:
+     # src: index.html
+      #dest: /usr/share/nginx/html/index.html
+
+  - name: Allow all acces to tcp port 80
+    ufw:
+      rule: allow
+      port: '80'
+      proto: tcp
+
+  - name: Make sure Nginx is running
+    systemd:
+      state: started
+      name: nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx 
+        state: restarted

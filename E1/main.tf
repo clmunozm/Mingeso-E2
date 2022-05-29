@@ -17,7 +17,13 @@ variable "token_do" {
 
 provider "digitalocean" {
   # Configuration options
-  token = var.token_do
+  token = "${var.token_do}"
+}
+
+# Create public key
+resource "digitalocean_ssh_key" "public_key" {
+  name = "public_key"
+  public_key = "${file("/home/claudio/.ssh/id_rsa.pub")}"
 }
 
 # Create web servers
@@ -26,4 +32,12 @@ resource "digitalocean_droplet" "server1" {
     size = "s-1vcpu-1gb"
     region = "nyc1"
     image = "ubuntu-20-04-x64"
+    ssh_keys = ["${digitalocean_ssh_key.public_key.fingerprint}"]
+}
+resource "digitalocean_droplet" "server2" {
+    name = "Servidor-2"
+    size = "s-1vcpu-1gb"
+    region = "nyc1"
+    image = "ubuntu-20-04-x64"
+    ssh_keys = ["${digitalocean_ssh_key.public_key.fingerprint}"]
 }
