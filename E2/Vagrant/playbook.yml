@@ -1,0 +1,24 @@
+- hosts: all
+  become: yes # sudo
+  tasks:
+  ##
+  # Actualizar paquetes actuales y repositorios
+  ##
+  - name: apt-get update equivalent
+    apt:
+      update_cache: yes
+  - name: Instalacion de paquetes
+    apt: 
+      name: "{{ packages }}"
+      state: present
+    vars:
+      packages:
+        - apache2
+        - mysql-server
+        - mysql-client
+        - php-mysql
+        - php-xmlrpc
+        - php-soap
+  - name: apt-get update equivalent again
+    apt:
+      update_cache: yes
