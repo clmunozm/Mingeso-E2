@@ -10,6 +10,10 @@ public class Corredor {
     String checkPoint2; // HH:MM:SS
     String checkPointLlegada; // HH:MM:SS
 
+    // Constructor
+    public Corredor(){
+    }
+
     // Getters and setters
     public String getRut() {
         return rut;
